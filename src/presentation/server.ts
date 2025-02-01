@@ -1,5 +1,5 @@
-import express, { Router } from 'express';
-import {Server as ServerI} from 'http'
+import express, { Router } from "express";
+import { Server as ServerI } from "http";
 
 interface Options {
   port: number;
@@ -8,8 +8,6 @@ interface Options {
 }
 
 export class Server {
-
-
   public readonly app = express();
   private readonly port: number;
   private readonly routes: Router;
@@ -18,10 +16,9 @@ export class Server {
 
   constructor(options: Options) {
     this.port = options.port;
-    this.routes = options.routes ;
-    this.public_path = options.public_path || 'public';
+    this.routes = options.routes;
+    this.public_path = options.public_path || "public";
   }
-
 
   start() {
     this.app.use(express.json());
@@ -32,11 +29,10 @@ export class Server {
 
     this.serverListener = this.app.listen(this.port, () => {
       console.log(`Server running on port ${this.port}`);
-    })
+    });
   }
 
-  close(){
+  close() {
     this.serverListener?.close();
   }
-
 }

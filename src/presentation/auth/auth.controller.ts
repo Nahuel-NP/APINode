@@ -1,14 +1,9 @@
-
-import { Request, Response } from "express";
-
+import { Request, Response } from 'express';
 
 export class AuthController {
-
-  constructor(
-    // service
-  ) { }
+  constructor() {} // service
 
   someMethod = (req: Request, res: Response) => {
-    res.send('Hello World')
-  }
+    res.send('Hello World');
+  };
 }
