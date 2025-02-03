@@ -1,9 +1,27 @@
 import { Request, Response } from 'express';
+import { CustomError } from '../../domain/errors/custom.error';
+import { AuthService } from './auth.service';
+import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto';
 
 export class AuthController {
-  constructor() {} // service
+  constructor(public readonly authService: AuthService) {}
 
-  someMethod = (req: Request, res: Response) => {
-    res.send('Hello World');
+  private handleError = (error: unknown, res: Response) => {
+    if (error instanceof CustomError) {
+      return res.status(error.statusCode).json({ error: error.message });
+    } else {
+      return res.status(500).json({ error: 'Internal server error' });
+    }
   };
+
+  public loginUser = (req: Request, res: Response) => {
+    const [error, loginDto] = LoginUserDto.create(req.body);
+
+    if (error) return res.send(400).json({ error });
+
+    this.authService
+      .loginUser(loginDto!)
+      .then((user) => res.json(user))
+      .catch((error) => this.handleError(error, res));
+  }
 }
