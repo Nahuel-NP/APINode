@@ -2,9 +2,9 @@ import { regularExps } from "../../../config/regular-exp";
 
 export class RegisterUserDto {
   private constructor(
-    private readonly name: string,
-    private readonly email: string,
-    private readonly password: string,
+    public readonly name: string,
+    public readonly email: string,
+    public readonly password: string,
   ) {}
 
   static create(object: { [key: string]: any }): [string?, RegisterUserDto?] {
