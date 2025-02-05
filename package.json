@@ -11,13 +11,15 @@
     "rimraf": "^6.0.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2",
-    "typescript-eslint": "^8.22.0"
+    "typescript-eslint": "^8.22.0",
+    "vitest": "^3.0.5"
   },
   "scripts": {
     "dev": "tsnd --respawn --clear src/app.ts",
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/app.js",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "vitest"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
