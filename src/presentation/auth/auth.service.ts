@@ -9,7 +9,22 @@ export class AuthService {
   constructor /* Inject */() {}
 
   public async loginUser(loginUserDto: LoginUserDto) {
-    return loginUserDto;
+    const existUser = await prisma.user.findFirst({
+      where: {
+        email: loginUserDto.email,
+      },
+    });
+
+    if (!existUser) throw CustomError.badRequest('User not found');
+
+    const isMatch = bcryptAdapter.compare(
+      loginUserDto.password,
+      existUser.password,
+    );
+
+    if (!isMatch) throw CustomError.badRequest('Invalid credentials');
+    const { password: _, ...user } = UserEntity.fromObject(existUser);
+    return user;
   }
 
   public async registerUser(registerUserDto: RegisterUserDto) {
@@ -18,10 +33,9 @@ export class AuthService {
         email: registerUserDto.email,
       },
     });
-    
+
     if (existUser) throw CustomError.badRequest('User already exists');
     try {
-
       const newUser = await prisma.user.create({
         data: {
           ...registerUserDto,
