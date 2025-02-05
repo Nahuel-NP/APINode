@@ -1,4 +1,5 @@
 import { bcryptAdapter } from '../../config/bcrypt.adapter';
+import { JwtAdapter } from '../../config/jwt.adapter';
 import { prisma } from '../../config/prismaClient';
 import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto';
 import { RegisterUserDto } from '../../domain/dtos/auth/register-user.dto';
@@ -23,8 +24,12 @@ export class AuthService {
     );
 
     if (!isMatch) throw CustomError.badRequest('Invalid credentials');
+    const token = await JwtAdapter.generateToken({ id: existUser.id });
     const { password: _, ...user } = UserEntity.fromObject(existUser);
-    return user;
+    return {
+      user,
+      token,
+    };
   }
 
   public async registerUser(registerUserDto: RegisterUserDto) {
@@ -44,8 +49,11 @@ export class AuthService {
       });
 
       const { password: _, ...user } = UserEntity.fromObject(newUser);
+
+      const token = await JwtAdapter.generateToken({ id: user.id });
       return {
         user,
+        token,
       };
     } catch (error) {
       console.log(error);
