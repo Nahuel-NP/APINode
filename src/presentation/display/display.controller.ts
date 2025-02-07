@@ -20,4 +20,12 @@ export class DisplayController {
       .then((displays) => res.json(displays))
       .catch((error) => this.handleError(error, res));
   };
+
+  public getDisplayById = (req: Request, res: Response) => {
+    const { id } = req.params;
+    this.displayService
+      .getDisplayById(+id)
+      .then((display) => res.json(display))
+      .catch((error) => this.handleError(error, res));
+  };
 }

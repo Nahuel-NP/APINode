@@ -8,6 +8,7 @@ export class DisplayRoutes {
     const displayService = new DisplayService();
     const displayController = new DisplayController(displayService);
     router.get('/', displayController.getAllDisplays);
+    router.get('/:id', displayController.getDisplayById);
     return router;
   }
 }

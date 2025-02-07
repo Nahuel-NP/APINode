@@ -12,4 +12,17 @@ export class DisplayService {
       displays
     }
   }
+
+  //TODO: userId
+  async getDisplayById(id: number) {
+    const display = await prisma.display.findUnique({
+      where: {
+        id: id,
+      },
+    });
+
+    return {
+      display
+    }
+  }
 }
