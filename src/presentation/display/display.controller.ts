@@ -13,10 +13,10 @@ export class DisplayController {
     }
   };
 
-  public getDisplay = (req: Request, res: Response) => {
+  public getAllDisplays = (req: Request, res: Response) => {
     const { user_id } = req.body;
     this.displayService
-      .getAllDisplay(user_id)
+      .getAllDisplays(user_id)
       .then((displays) => res.json(displays))
       .catch((error) => this.handleError(error, res));
   };

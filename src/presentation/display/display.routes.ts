@@ -7,7 +7,7 @@ export class DisplayRoutes {
     const router = Router();
     const displayService = new DisplayService();
     const displayController = new DisplayController(displayService);
-    router.get('/', displayController.getDisplay);
+    router.get('/', displayController.getAllDisplays);
     return router;
   }
 }
