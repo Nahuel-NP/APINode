@@ -1,10 +1,10 @@
 export class DisplayEntity {
   constructor(
-    public readonly id: string,
+    public readonly id: number,
     public readonly name: string,
     public readonly description: string,
     public picture_ur: string,
-    public readonly user_id: number,
+    public readonly user_id: string,
     public readonly price_per_day: string,
     public readonly resolution_height: string,
     public readonly resolution_width: string,
