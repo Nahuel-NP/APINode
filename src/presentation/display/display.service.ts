@@ -1,4 +1,5 @@
 import { prisma } from '../../config/prismaClient';
+import { CreateDisplayDto } from '../../domain/dtos/display/create-display.dto';
 
 export class DisplayService {
   async getAllDisplays(user_id: string) {
@@ -24,5 +25,9 @@ export class DisplayService {
     return {
       display,
     };
+  }
+
+  async createDisplay(display: CreateDisplayDto, user_id: string) {
+    return { display, user_id };
   }
 }
