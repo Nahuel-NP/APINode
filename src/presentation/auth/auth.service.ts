@@ -25,7 +25,7 @@ export class AuthService {
 
     if (!isMatch) throw CustomError.badRequest('Invalid credentials');
     const token = await JwtAdapter.generateToken({ id: existUser.id });
-    const { password: _, ...user } = UserEntity.fromObject(existUser);
+    const user = UserEntity.fromObject(existUser);
     return {
       user,
       token,
@@ -48,7 +48,7 @@ export class AuthService {
         },
       });
 
-      const { password: _, ...user } = UserEntity.fromObject(newUser);
+      const user  = UserEntity.fromObject(newUser);
 
       const token = await JwtAdapter.generateToken({ id: user.id });
       return {
