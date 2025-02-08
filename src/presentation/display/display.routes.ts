@@ -10,6 +10,7 @@ export class DisplayRoutes {
     const displayController = new DisplayController(displayService);
     router.get('/',[AuthMiddlaware.validateJWT], displayController.getAllDisplays);
     router.get('/:id',[AuthMiddlaware.validateJWT], displayController.getDisplayById);
+    router.post('/',[AuthMiddlaware.validateJWT], displayController.createNewDisplay);
     return router;
   }
 }

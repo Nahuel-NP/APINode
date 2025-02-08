@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { CustomError } from '../../domain/errors/custom.error';
 import { DisplayService } from './display.service';
+import { CreateDisplayDto } from '../../domain/dtos/display/create-display.dto';
 
 export class DisplayController {
   constructor(public readonly displayService: DisplayService) {}
@@ -23,8 +24,22 @@ export class DisplayController {
 
   public getDisplayById = (req: Request, res: Response) => {
     const { id } = req.params;
+    const { user } = req.body;
     this.displayService
-      .getDisplayById(+id)
+      .getDisplayById(+id, user.id)
+      .then((display) => res.json(display))
+      .catch((error) => this.handleError(error, res));
+  };
+
+  public createNewDisplay = (req: Request, res: Response) => {
+    const { user, ...body } = req.body;
+
+    const [error, createDisplayDto] = CreateDisplayDto.create(body);
+
+    if (error) return res.status(400).json({ error });
+
+    this.displayService
+      .createDisplay(createDisplayDto!, user.id)
       .then((display) => res.json(display))
       .catch((error) => this.handleError(error, res));
   };
