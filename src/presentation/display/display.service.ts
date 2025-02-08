@@ -9,20 +9,20 @@ export class DisplayService {
     });
 
     return {
-      displays
-    }
+      displays,
+    };
   }
 
-  //TODO: userId
-  async getDisplayById(id: number) {
+  async getDisplayById(id: number, user_id: string) {
     const display = await prisma.display.findUnique({
       where: {
         id: id,
+        user_id,
       },
     });
 
     return {
-      display
-    }
+      display,
+    };
   }
 }
