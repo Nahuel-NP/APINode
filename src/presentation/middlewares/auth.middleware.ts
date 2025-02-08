@@ -5,7 +5,8 @@ import { UserEntity } from '../../domain/entities/user.entity';
 
 export class AuthMiddlaware {
   static async validateJWT(req: Request, res: Response, next: NextFunction) {
-    const authorization = req.header('Authirazation');
+    const authorization = req.header('Authorization');
+
     if (!authorization) {
       return res.status(401).json({
         message: 'Token not found',
