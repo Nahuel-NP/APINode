@@ -52,6 +52,7 @@ export class AuthService {
       const user = UserEntity.fromObject(newUser);
 
       const token = await JwtAdapter.generateToken({ id: user.id });
+      await this.sendValidationEmail(user.email);
       return {
         user,
         token,
@@ -76,7 +77,7 @@ export class AuthService {
       subject: 'Validate your email',
       htmlBody: html,
     };
-    console.log(options);
+    console.log(options,token);
 
     /*     const isSent = await this.emailService.sendEmail(options);
 
