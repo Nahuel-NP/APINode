@@ -10,6 +10,7 @@ describe('Test envs file', () => {
       POSTGRES_PORT: 5432,
       POSTGRES_PASSWORD: '123456',
       JWT_SEED: 'MyJs0nW3bTokenSeed',
+      FRONTEND_URL:'http://localhost:3000/api'
     });
   });
 

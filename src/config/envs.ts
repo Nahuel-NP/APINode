@@ -9,4 +9,5 @@ export const envs = {
   POSTGRES_PORT: get('POSTGRES_PORT').required().asPortNumber(),
   POSTGRES_PASSWORD: get('POSTGRES_PASSWORD').required().asString(),
   JWT_SEED: get('JWT_SEED').required().asString(),
+  FRONTEND_URL:get('FRONTEND_URL').required().asString(),
 };
