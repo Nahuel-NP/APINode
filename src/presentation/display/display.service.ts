@@ -30,4 +30,27 @@ export class DisplayService {
   async createDisplay(display: CreateDisplayDto, user_id: string) {
     return { display, user_id };
   }
+
+  async deleteDisplay(id: number, user_id: string) {
+    const displayToDelete = await prisma.display.findUnique({
+      where: {
+        id: id,
+        user_id,
+      },
+    });
+    if (!displayToDelete) {
+      throw new Error('Display not found');
+    }
+
+    const display = await prisma.display.delete({
+      where: {
+        id: id,
+        user_id,
+      },
+    });
+
+    return {
+      display,
+    };
+  }
 }

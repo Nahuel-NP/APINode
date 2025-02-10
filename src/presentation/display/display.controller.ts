@@ -43,4 +43,13 @@ export class DisplayController {
       .then((display) => res.json(display))
       .catch((error) => this.handleError(error, res));
   };
+
+  public deleteDisplay = (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { user } = req.body;
+    this.displayService
+      .deleteDisplay(+id, user.id)
+      .then((display) => res.json(display))
+      .catch((error) => this.handleError(error, res));
+  };
 }
