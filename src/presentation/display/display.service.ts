@@ -1,5 +1,6 @@
 import { prisma } from '../../config/prismaClient';
 import { CreateDisplayDto } from '../../domain/dtos/display/create-display.dto';
+import { CustomError } from '../../domain/errors/custom.error';
 
 export class DisplayService {
   async getAllDisplays(user_id: string) {
@@ -28,7 +29,33 @@ export class DisplayService {
   }
 
   async createDisplay(display: CreateDisplayDto, user_id: string) {
-    return { display, user_id };
+    try {
+      const {
+        description,
+        name,
+        price_per_day,
+        resolution_height,
+        resolution_width,
+        type,
+      } = display;
+      const newDisplay = await prisma.display.create({
+        data: {
+          description,
+          name,
+          picture_url:'random picture_url',
+          price_per_day,
+          resolution_height,
+          resolution_width,
+          type,
+          user_id,
+        },
+      });
+      return { newDisplay };
+    } catch (error) {
+      console.log(error)
+      throw CustomError.internalServer(`${error}`);
+    }
+
   }
 
   async deleteDisplay(id: number, user_id: string) {
