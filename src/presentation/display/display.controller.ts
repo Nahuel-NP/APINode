@@ -56,4 +56,18 @@ export class DisplayController {
       .then((display) => res.json(display))
       .catch((error) => this.handleError(error, res));
   };
+
+
+  public updateDisplay = (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { user, ...body } = req.body;
+    const [error, createDisplayDto] = CreateDisplayDto.create(body);
+
+    if (error) return res.status(400).json({ error });
+
+    this.displayService
+      .updateDisplay(+id, user.id, createDisplayDto!)
+      .then((display) => res.json(display))
+      .catch((error) => this.handleError(error, res));
+  };
 }

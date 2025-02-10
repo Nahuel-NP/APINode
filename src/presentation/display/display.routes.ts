@@ -11,7 +11,8 @@ export class DisplayRoutes {
     router.get('/',[AuthMiddlaware.validateJWT], displayController.getAllDisplays);
     router.get('/:id',[AuthMiddlaware.validateJWT], displayController.getDisplayById);
     router.post('/',[AuthMiddlaware.validateJWT], displayController.createNewDisplay);
-    router.delete('/:id', [AuthMiddlaware.validateJWT], displayController.deleteDisplay)
+    router.delete('/:id', [AuthMiddlaware.validateJWT], displayController.deleteDisplay);
+    router.put('/:id', [AuthMiddlaware.validateJWT], displayController.updateDisplay);
     return router;
   }
 }

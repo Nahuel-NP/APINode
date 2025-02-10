@@ -97,4 +97,30 @@ export class DisplayService {
       display,
     };
   }
+
+  async updateDisplay(id: number, user_id: string, display: CreateDisplayDto) {
+    const displayToUpdate = await prisma.display.findUnique({
+      where: {
+        id: id,
+        user_id,
+      },
+    });
+    if (!displayToUpdate) {
+      throw new Error('Display not found');
+    }
+
+    const updatedDisplay = await prisma.display.update({
+      where: {
+        id: id,
+        user_id,
+      },
+      data: {
+        ...display,
+      },
+    });
+
+    return {
+      updatedDisplay,
+    };
+  }
 }
