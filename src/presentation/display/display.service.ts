@@ -1,17 +1,34 @@
 import { prisma } from '../../config/prismaClient';
 import { CreateDisplayDto } from '../../domain/dtos/display/create-display.dto';
+import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 import { CustomError } from '../../domain/errors/custom.error';
 
 export class DisplayService {
-  async getAllDisplays(user_id: string) {
+  async getAllDisplays(user_id: string,paginationDto:PaginationDto) {
+
     const displays = await prisma.display.findMany({
       where: {
         user_id: user_id,
       },
+      skip: (paginationDto.page - 1) * paginationDto.limit,
+      take: paginationDto.limit,
     });
+    // page info
+    const total_items = await prisma.display.count({
+      where: {
+        user_id: user_id,
+      },
+    });
+    const total_pages = Math.ceil(total_items / paginationDto.limit);
 
     return {
       displays,
+      meta: {
+        total_items,
+        current_page: paginationDto.page,
+        total_pages,
+      },
+      
     };
   }
 

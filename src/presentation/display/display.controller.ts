@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { CustomError } from '../../domain/errors/custom.error';
 import { DisplayService } from './display.service';
 import { CreateDisplayDto } from '../../domain/dtos/display/create-display.dto';
+import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 
 export class DisplayController {
   constructor(public readonly displayService: DisplayService) {}
@@ -16,8 +17,11 @@ export class DisplayController {
 
   public getAllDisplays = (req: Request, res: Response) => {
     const { user } = req.body;
+    const { page = 1, limit = 10 } = req.query;
+    const [error, paginationDto] = PaginationDto.create(+page, +limit);
+    if (error) return res.status(400).json({ error });
     this.displayService
-      .getAllDisplays(user.id)
+      .getAllDisplays(user.id, paginationDto!)
       .then((displays) => res.json(displays))
       .catch((error) => this.handleError(error, res));
   };
