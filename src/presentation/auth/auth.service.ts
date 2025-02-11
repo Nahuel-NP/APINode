@@ -25,7 +25,15 @@ export class AuthService {
       existUser.password,
     );
 
+    
     if (!isMatch) throw CustomError.badRequest('Invalid credentials');
+
+
+    if (existUser && !existUser.email_validated) {
+      await this.sendValidationEmail(existUser?.email)
+      throw CustomError.forbiden('Please validate your email')
+    }
+    
     const token = await JwtAdapter.generateToken({ id: existUser.id });
     const user = UserEntity.fromObject(existUser);
     return {
@@ -53,7 +61,9 @@ export class AuthService {
       const user = UserEntity.fromObject(newUser);
 
       const token = await JwtAdapter.generateToken({ id: user.id });
+
       await this.sendValidationEmail(user.email);
+
       return {
         user,
         token,

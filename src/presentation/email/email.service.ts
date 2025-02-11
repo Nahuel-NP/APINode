@@ -13,13 +13,12 @@ export class EmailService {
     const { html, subject, to } = options;
 
     try {
-      const { data, error } = await resend.emails.send({
+      const {  error } = await resend.emails.send({
         from: 'Acme <onboarding@resend.dev>',
         to,
         subject,
         html,
       });
-      console.log({ data });
       if (error) {
         return false;
       }
