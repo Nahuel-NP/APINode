@@ -6,9 +6,10 @@ import { LoginUserDto } from '../../domain/dtos/auth/login-user.dto';
 import { RegisterUserDto } from '../../domain/dtos/auth/register-user.dto';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { CustomError } from '../../domain/errors/custom.error';
+import { EmailService } from '../email/email.service';
 
 export class AuthService {
-  constructor /* Inject */() {}
+  constructor(public emailService: EmailService) {}
 
   public async loginUser(loginUserDto: LoginUserDto) {
     const existUser = await prisma.user.findFirst({
@@ -75,14 +76,13 @@ export class AuthService {
     const options = {
       to: email,
       subject: 'Validate your email',
-      htmlBody: html,
+      html: html,
     };
-    console.log(options,token);
 
-    /*     const isSent = await this.emailService.sendEmail(options);
+    const isSent = await this.emailService.sendEmail(options);
 
     if (!isSent) throw CustomError.internalServer('Error while sending email');
- */
+
     return true;
   };
 
@@ -111,6 +111,5 @@ export class AuthService {
     });
 
     return true;
-
   };
 }
