@@ -28,6 +28,7 @@
     "dotenv": "^16.4.7",
     "env-var": "^7.5.0",
     "express": "^4.21.2",
-    "jsonwebtoken": "^9.0.2"
+    "jsonwebtoken": "^9.0.2",
+    "resend": "^4.1.2"
   }
 }
