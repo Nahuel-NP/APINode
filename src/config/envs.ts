@@ -10,4 +10,5 @@ export const envs = {
   POSTGRES_PASSWORD: get('POSTGRES_PASSWORD').required().asString(),
   JWT_SEED: get('JWT_SEED').required().asString(),
   FRONTEND_URL:get('FRONTEND_URL').required().asString(),
+  RESEND_KEY:get('RESEND_KEY').required().asString(),	
 };
