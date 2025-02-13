@@ -5,6 +5,7 @@ export class CreateDisplayDto {
     public readonly price_per_day: string,
     public readonly resolution_height: string,
     public readonly resolution_width: string,
+    public readonly picture_url:string,
     public readonly type: string,
   ) {}
 
@@ -15,6 +16,7 @@ export class CreateDisplayDto {
       price_per_day,
       resolution_height,
       resolution_width,
+      picture_url,
       type,
     } = props;
 
@@ -35,7 +37,8 @@ export class CreateDisplayDto {
         price_per_day,
         resolution_height,
         resolution_width,
-        type,
+        picture_url,
+        type
       ),
     ];
   }

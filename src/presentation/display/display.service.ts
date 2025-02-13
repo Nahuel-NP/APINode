@@ -59,13 +59,14 @@ export class DisplayService {
         price_per_day,
         resolution_height,
         resolution_width,
+        picture_url,
         type,
       } = display;
       const newDisplay = await prisma.display.create({
         data: {
           description,
           name,
-          picture_url:'random picture_url',
+          picture_url,
           price_per_day,
           resolution_height,
           resolution_width,
