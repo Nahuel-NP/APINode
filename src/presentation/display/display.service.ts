@@ -4,11 +4,17 @@ import { PaginationDto } from '../../domain/dtos/shared/pagination.dto';
 import { CustomError } from '../../domain/errors/custom.error';
 
 export class DisplayService {
-  async getAllDisplays(user_id: string,paginationDto:PaginationDto) {
+  async getAllDisplays(user_id: string,paginationDto:PaginationDto,displayType:string,name:string) {
 
     const displays = await prisma.display.findMany({
       where: {
         user_id: user_id,
+        type: {
+          contains: displayType,
+        },
+        name: {
+          contains: name,
+        },
       },
       skip: (paginationDto.page - 1) * paginationDto.limit,
       take: paginationDto.limit,

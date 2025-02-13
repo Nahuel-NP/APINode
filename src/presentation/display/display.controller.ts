@@ -17,11 +17,11 @@ export class DisplayController {
 
   public getAllDisplays = (req: Request, res: Response) => {
     const { user } = req.body;
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 10, name='', type='' } = req.query;
     const [error, paginationDto] = PaginationDto.create(+page, +limit);
     if (error) return res.status(400).json({ error });
     this.displayService
-      .getAllDisplays(user.id, paginationDto!)
+      .getAllDisplays(user.id, paginationDto!, type.toString(), name.toString())
       .then((displays) => res.json(displays))
       .catch((error) => this.handleError(error, res));
   };
@@ -56,7 +56,6 @@ export class DisplayController {
       .then((display) => res.json(display))
       .catch((error) => this.handleError(error, res));
   };
-
 
   public updateDisplay = (req: Request, res: Response) => {
     const { id } = req.params;
